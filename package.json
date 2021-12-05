@@ -5,7 +5,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --reporter spec"
+    "test": "mocha --reporter spec",
+	"single": "mocha -g"
   },
   "author": "Roberto Ughi",
   "license": "ISC",

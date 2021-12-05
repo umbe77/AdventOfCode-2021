@@ -1,6 +1,7 @@
 import fs from 'fs'
 import { getIncreaseCount, getIncreaseGroupThreeCount } from './src/day-01.js'
 import { parseInput, getFinalPosition, getFinalPositionWithAim } from './src/day-02.js'
+import { getConsumption, getLifeSupport, parseDiagnostics } from './src/day-03.js'
 
 const main = (day, file) => {
 	if (day === "01") {
@@ -18,6 +19,13 @@ const main = (day, file) => {
 		console.log(finalPosition.position)
 		const finalPositionWithAim = getFinalPositionWithAim(movements)
 		console.log((finalPositionWithAim.position))
+	}
+	else if (day === "03") {
+		const diagnostics = parseDiagnostics(fs.readFileSync(file).toString())
+		const { consumption } = getConsumption(diagnostics)
+		console.log(consumption)
+		const { lifeSupportRate } = getLifeSupport(diagnostics)
+		console.log(lifeSupportRate)
 	}
 }
 
