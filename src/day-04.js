@@ -1,6 +1,5 @@
 
 export const parseBingoInput = (bingodata) => {
-	console.log(bingodata)
 	const lines = bingodata.split('\n')
 	const bingo = {
 		"drawn": [],

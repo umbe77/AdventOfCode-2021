@@ -3,6 +3,7 @@ import { getIncreaseCount, getIncreaseGroupThreeCount } from './src/day-01.js'
 import { parseInput, getFinalPosition, getFinalPositionWithAim } from './src/day-02.js'
 import { getConsumption, getLifeSupport, parseDiagnostics } from './src/day-03.js'
 import { parseBingoInput, playBingo, getLastWinningBoard } from './src/day-04.js'
+import {parseVentInput, findIntersection, findAllIntersection} from './src/day-05.js'
 
 const main = (day, file) => {
 	if (day === "01") {
@@ -36,6 +37,13 @@ const main = (day, file) => {
 		console.log(lastWinningCall)
 		console.log(unmarked)
 		console.log(lastWinningScore)
+	}
+	else if (day === "05") {
+		const vent = parseVentInput(fs.readFileSync(file).toString())
+		const intersectionCount = findIntersection(vent)
+		console.log(intersectionCount)
+		const allIntersectionCount = findAllIntersection(vent)
+		console.log(allIntersectionCount)
 	}
 }
 
