@@ -40,7 +40,7 @@ const markBoard = (board, numbers, numberDrawn, drawnProperty) => {
 	for (let i = 0; i < numbers.length; ++i) {
 		const line = numbers[i]
 		line.forEach((boardNumber, index) => {
-			if (boardNumber.number === numberDrawn) {
+			if (parseInt(boardNumber.number) === parseInt(numberDrawn)) {
 				boardNumber.isDrawn = true
 				board[drawnProperty][index]++
 			}
@@ -93,6 +93,7 @@ export const getLastWinningBoard = ({ drawn, boards }) => {
 		}
 	}
 
+	// console.log(winningBoards[winningBoards.length - 1].boardIndex)
 	return winningBoards[winningBoards.length - 1]
 }
 
