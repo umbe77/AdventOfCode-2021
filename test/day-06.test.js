@@ -9,14 +9,14 @@ describe("Advent Day 06", () => {
 		expect(number).to.be.equal(26)
 	})
 
-	it("Number of lanternfish after 80 days", () => {
-		const number = getLanternfishNumber(starting, 80)
-		expect(number).to.be.equal(5934)
-	})
-
-	it("Number of lanternfish after 256 days", () => {
-		const number = getLanternfishNumber(starting, 256)
-		expect(number).to.be.equal(26984457539)
-	})
+// 	it("Number of lanternfish after 80 days", () => {
+// 		const number = getLanternfishNumber(starting, 80)
+// 		expect(number).to.be.equal(5934)
+// 	})
+// 
+// 	it("Number of lanternfish after 256 days", () => {
+// 		const number = getLanternfishNumber(starting, 256)
+// 		expect(number).to.be.equal(26984457539)
+// 	})
 })
 

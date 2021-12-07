@@ -5,6 +5,7 @@ import { getConsumption, getLifeSupport, parseDiagnostics } from './src/day-03.j
 import { parseBingoInput, playBingo, getLastWinningBoard } from './src/day-04.js'
 import { parseVentInput, findIntersection, findAllIntersection } from './src/day-05.js'
 import { getLanternfishNumber } from './src/day-06.js'
+import { alignCrabSubmarines, alignCrabSubmarines2 } from './src/day-07.js'
 
 const main = (day, file) => {
 	if (day === "01") {
@@ -49,6 +50,13 @@ const main = (day, file) => {
 		const lanternFishes = fs.readFileSync(file).toString().split(",").map(e => parseInt(e))
 		const lanternFishesAfter80Days = getLanternfishNumber(lanternFishes, 80)
 		console.log(lanternFishesAfter80Days)
+	}
+	else if (day === "07") {
+		const submarines = fs.readFileSync(file).toString().split(",").map(e => parseInt(e))
+		const fuelConsumption = alignCrabSubmarines(submarines)
+		console.log(fuelConsumption)
+		const fuelConsumptionByDistance = alignCrabSubmarines2(submarines)
+		console.log(fuelConsumptionByDistance)
 	}
 }
 
