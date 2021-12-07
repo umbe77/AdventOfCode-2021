@@ -4,6 +4,7 @@ import { parseInput, getFinalPosition, getFinalPositionWithAim } from './src/day
 import { getConsumption, getLifeSupport, parseDiagnostics } from './src/day-03.js'
 import { parseBingoInput, playBingo, getLastWinningBoard } from './src/day-04.js'
 import { parseVentInput, findIntersection, findAllIntersection } from './src/day-05.js'
+import { getLanternfishNumber } from './src/day-06.js'
 
 const main = (day, file) => {
 	if (day === "01") {
@@ -43,6 +44,11 @@ const main = (day, file) => {
 		console.log(intersectionCount)
 		const allIntersectionCount = findAllIntersection(vent)
 		console.log(allIntersectionCount)
+	}
+	else if (day === "06") {
+		const lanternFishes = fs.readFileSync(file).toString().split(",").map(e => parseInt(e))
+		const lanternFishesAfter80Days = getLanternfishNumber(lanternFishes, 80)
+		console.log(lanternFishesAfter80Days)
 	}
 }
 
