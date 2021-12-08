@@ -6,7 +6,7 @@ import { parseBingoInput, playBingo, getLastWinningBoard } from './src/day-04.js
 import { parseVentInput, findIntersection, findAllIntersection } from './src/day-05.js'
 import { getLanternfishTotal } from './src/day-06.js'
 import { alignCrabSubmarines, alignCrabSubmarines2 } from './src/day-07.js'
-import { parseInput as parseInput08, countSimpleDigits } from './src/day-08.js'
+import { parseInput as parseInput08, countSimpleDigits, getAllSignalMappings } from './src/day-08.js'
 
 const days = {
 	"01": (file) => {
@@ -65,6 +65,8 @@ const days = {
 		const data = parseInput08(fs.readFileSync(file).toString())
 		const countSimple = countSimpleDigits(data)
 		console.log(countSimple)
+		const countAllMappings = getAllSignalMappings(data)
+		console.log(countAllMappings)
 	}
 }
 

@@ -28,88 +28,81 @@ export const countSimpleDigits = (data) => {
 	}, 0)
 }
 
-const numbers = [
-	[0, 1, 2, 3, 4, 5], // 0
-	[5, 4], // 1
-	[0, 5, 6, 2, 3], // 2
-	[0, 5, 4, 3, 6], // 3
-	[1, 6, 5, 4], // 4
-	[0, 1, 6, 4, 3], // 5
-	[0, 1, 2, 3, 4, 6], // 6
-	[0, 5, 4], // 7
-	[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], // 8
-	[0, 1, 6, 5, 4, 3], // 9
-]
-
-const getPositions = (inputs, number, positions) => {
-	switch (number) {
-		case 1:
-			inputs.forEach(input => {
-				if (input.length == 2) {
-					const letters = input.split('')
-					positions[letters[0]] = 4
-					positions[letters[1]] = 5
-				}
-			})
-			break
-		case 7:
-			inputs.forEach(input => {
-				if (input.length == 3) {
-					input.split('')
-						.forEach(l => {
-							if (positions[l] === undefined) {
-								positions[l] = 0
-							}
-						})
-				}
-			})
-			break
-		case 4:
-			inputs.forEach(input => {
-				if (input.length == 4) {
-					const newLetters = []
-					input.split('')
-						.forEach(l => {
-							if (positions[l] === undefined) {
-								newLetters.push(l)
-							}
-						})
-					positions[newLetters[0]] = 1
-					positions[newLetters[1]] = 6
-				}
-			})
-			break
-		case 8:
-			inputs.forEach(input => {
-				if (input.length == 7) {
-					const newLetters = []
-					input.split('')
-						.forEach(l => {
-							if (positions[l] === undefined) {
-								newLetters.push(l)
-							}
-						})
-					positions[newLetters[0]] = 2
-					positions[newLetters[1]] = 3
-				}
-			})
-			break
-	}
+const sortSequence = (sequence) => {
+	return sequence.split('').sort().join('')
 }
 
+const mapNumber = (inputs, mapping, numbers, input, index, number) => {
+	const seq = sortSequence(input)
+	mapping[seq] = number
+	numbers[number] = seq
+	inputs.splice(index, 1)
+}
+
+const match = (source, compare) => {
+
+	return source.split('').every(v => compare.split('').includes(v))
+
+}
 
 export const getAllSignalMappings = (data) => {
-	return data.reduce((acc, { inputs, outputs }) => {
-		const positions = {}
+	return data.reduce((acc, { inputs: orig, outputs }) => {
 
-		getPositions(inputs, 1, positions)
-		getPositions(inputs, 7, positions)
-		getPositions(inputs, 4, positions)
-		getPositions(inputs, 8, positions)
+		const numbers = {}
+		const mapping = {}
 
-		console.dir(positions)
-		console.log('===========')
+		const inputs = orig.slice()
 
-		return acc
+		//get 1, 7, 4, 8 mapping
+		for (let index = inputs.length-1;index>=0;--index) {
+			const input = inputs[index]
+			switch (input.length) {
+				case 2:
+					mapNumber(inputs, mapping, numbers, input, index, 1)
+					break
+				case 3:
+					mapNumber(inputs, mapping, numbers, input, index, 7)
+					break
+				case 4:
+					mapNumber(inputs, mapping, numbers, input, index, 4)
+					break
+				case 7:
+					mapNumber(inputs, mapping, numbers, input, index, 8)
+					break
+			}
+		}
+
+		for (let index = inputs.length-1;index>=0;--index) {
+			const input = inputs[index]
+			if (input.length === 5) {
+				if (match(numbers["1"], input)) {
+					mapNumber(inputs, mapping, numbers, input, index, 3)
+				}
+			}
+			else {
+				if (!match(numbers["1"], input)) {
+					mapNumber(inputs, mapping, numbers, input, index, 6)
+				}
+				if (match(numbers["4"], input)) {
+					mapNumber(inputs, mapping, numbers, input, index, 9)
+				}
+			}
+		}
+
+		for (let index = inputs.length-1;index>=0;--index) {
+			const input = inputs[index]
+			if (input.length === 5) {
+				if (match(input, numbers["9"])) {
+					mapNumber(inputs, mapping, numbers, input, index, 5)
+				}
+			}
+			else {
+				mapNumber(inputs, mapping, numbers, input, index, 0)
+			}
+		}
+		mapNumber(inputs, mapping, numbers, inputs[0], 0, 2)
+
+		return acc += parseInt(outputs.map(o => mapping[sortSequence(o)]).join(''))
+
 	}, 0)
 }

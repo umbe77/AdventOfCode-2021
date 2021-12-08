@@ -21,9 +21,9 @@ describe("Advent Day 08", () => {
 		expect(count).to.be.equal(26)
 	})
 
-	// it("Get Signals", () => {
-	// 	const data = parseInput(input)
-	// 	const count = getAllSignalMappings(data)
-	// 	expect(count).to.be.equal(61229)
-	// })
+	it("Get Signals", () => {
+		const data = parseInput(input)
+		const count = getAllSignalMappings(data)
+		expect(count).to.be.equal(61229)
+	})
 })
