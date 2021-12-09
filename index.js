@@ -70,7 +70,6 @@ const days = {
 	}
 }
 
-
 const day = process.argv.slice(2)
 
 days[day](`input-${day}.txt`)
