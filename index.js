@@ -7,6 +7,7 @@ import { parseVentInput, findIntersection, findAllIntersection } from './src/day
 import { getLanternfishTotal } from './src/day-06.js'
 import { alignCrabSubmarines, alignCrabSubmarines2 } from './src/day-07.js'
 import { parseInput as parseInput08, countSimpleDigits, getAllSignalMappings } from './src/day-08.js'
+import { parseHeightmap, getLowestPoints, getLargestBasins } from './src/day-09.js'
 
 const days = {
 	"01": (file) => {
@@ -67,6 +68,13 @@ const days = {
 		console.log(countSimple)
 		const countAllMappings = getAllSignalMappings(data)
 		console.log(countAllMappings)
+	},
+	"09": (file) => {
+		const heightMap = parseHeightmap(fs.readFileSync(file).toString())
+		const lowest = getLowestPoints(heightMap)
+		console.log(lowest)
+		const largest = getLargestBasins(heightMap)
+		console.log(largest)
 	}
 }
 
