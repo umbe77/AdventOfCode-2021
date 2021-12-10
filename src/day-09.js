@@ -31,95 +31,126 @@ export const getLowestPoints = (heightmap) => {
 	}, 0)
 }
 
-const horizontalScan = (heightmap, horizontalLength, x, y) => {
-	let horizontalDown = [{ x, y }]
-	let isGetAllHorizontal = false
-	let leftX = x
-	let rightX = x
-	while (!isGetAllHorizontal) {
-		leftX--
-		rightX++
-		if (leftX >= 0 && heightmap[y][leftX] < 9) {
-			horizontalDown.push({ x: leftX, y })
-		}
-		else {
-			leftX = -1
-		}
-		if (rightX < horizontalLength && heightmap[y][rightX] < 9) {
-			horizontalDown.push({ x: rightX, y })
-		}
-		else {
-			rightX = horizontalLength
-		}
-		if (leftX < 0 && rightX >= horizontalLength)
-			isGetAllHorizontal = true
-	}
-	return horizontalDown
-}
+// const horizontalScan = (heightmap, horizontalLength, x, y) => {
+// 	let horizontalDown = [{ x, y }]
+// 	let isGetAllHorizontal = false
+// 	let leftX = x
+// 	let rightX = x
+// 	while (!isGetAllHorizontal) {
+// 		leftX--
+// 		rightX++
+// 		if (leftX >= 0 && heightmap[y][leftX] < 9) {
+// 			horizontalDown.push({ x: leftX, y })
+// 		}
+// 		else {
+// 			leftX = -1
+// 		}
+// 		if (rightX < horizontalLength && heightmap[y][rightX] < 9) {
+// 			horizontalDown.push({ x: rightX, y })
+// 		}
+// 		else {
+// 			rightX = horizontalLength
+// 		}
+// 		if (leftX < 0 && rightX >= horizontalLength)
+// 			isGetAllHorizontal = true
+// 	}
+// 	return horizontalDown
+// }
+// 
+// const verticalScan = (heightmap, x, y) => {
+// 	const verticalDown = [{ x, y }]
+// 	let isGetAllVertical = false
+// 	let upY = y
+// 	let downY = y
+// 	while (!isGetAllVertical) {
+// 		upY--
+// 		downY++
+// 		if (upY >= 0 && heightmap[upY][x] < 9) {
+// 			verticalDown.push(({ x, y: upY }))
+// 		}
+// 		else {
+// 			upY = -1
+// 		}
+// 		if (downY < heightmap.length && heightmap[downY][x] < 9) {
+// 			verticalDown.push(({ x, y: downY }))
+// 		}
+// 		else {
+// 			downY = heightmap.length
+// 		}
+// 		if (upY < 0 && downY >= heightmap.length) {
+// 			isGetAllVertical = true
+// 		}
+// 	}
+// 	return verticalDown
+// }
+// 
+// const getBasinArea = (heightmap, horizontalLength, x, y) => {
+// 	const currentXs = horizontalScan(heightmap, horizontalLength, x, y)
+// 	const points = currentXs.reduce((acc, { x: hx, y: hy }) => {
+// 		if (acc[`${hx}${hy}`] === undefined) {
+// 			acc[`${hx}${hy}`] = 1
+// 		}
+// 		return acc
+// 	}, {})
+// 
+// 	currentXs.forEach(({ x: hx, y: hy }) => {
+// 		const verticalsPoints = verticalScan(heightmap, hx, hy)
+// 		verticalsPoints.forEach(({ x: vx, y: vy }) => {
+// 			if (points[`${vx}${vy}`] === undefined) {
+// 				const horizontalpoints = horizontalScan(heightmap, horizontalLength, vx, vy)
+// 				horizontalpoints.forEach(({ x: hx1, y: hy1 }) => {
+// 					if (points[`${hx1}${hy1}`] === undefined) {
+// 						points[`${hx1}${hy1}`] = 1
+// 					}
+// 				})
+// 			}
+// 		})
+// 	})
+// 
+// 	return Object.entries(points).reduce((acc, [_k, v]) => acc += v, 0)
+// }
 
-const verticalScan = (heightmap, x, y) => {
-	const verticalDown = [{ x, y }]
-	let isGetAllVertical = false
-	let upY = y
-	let downY = y
-	while (!isGetAllVertical) {
-		upY--
-		downY++
-		if (upY >= 0 && heightmap[upY][x] < 9) {
-			verticalDown.push(({ x, y: upY }))
-		}
-		else {
-			upY = -1
-		}
-		if (downY < heightmap.length && heightmap[downY][x] < 9) {
-			verticalDown.push(({ x, y: downY }))
-		}
-		else {
-			downY = heightmap.length
-		}
-		if (upY < 0 && downY >= heightmap.length) {
-			isGetAllVertical = true
-		}
-	}
-	return verticalDown
-}
+const getBasinArea = (x, y, rows, cols, heightMap) => {
+	const startCell = [x, y]
+	const queue = [startCell]
 
-const getBasinArea = (heightmap, horizontalLength, x, y) => {
-	const currentXs = horizontalScan(heightmap, horizontalLength, x, y)
-	const points = currentXs.reduce((acc, { x: hx, y: hy }) => {
-		if (acc[`${hx}${hy}`] === undefined) {
-			acc[`${hx}${hy}`] = 1
-		}
-		return acc
-	}, {})
+	const directions = [
+		[1, 0],
+		[-1, 0],
+		[0, 1],
+		[0, -1]
+	]
 
-	currentXs.forEach(({ x: hx, y: hy }) => {
-		const verticalsPoints = verticalScan(heightmap, hx, hy)
-		verticalsPoints.forEach(({ x: vx, y: vy }) => {
-			if (points[`${vx}${vy}`] === undefined) {
-				const horizontalpoints = horizontalScan(heightmap, horizontalLength, vx, vy)
-				horizontalpoints.forEach(({ x: hx1, y: hy1 }) => {
-					if (points[`${hx1}${hy1}`] === undefined) {
-						points[`${hx1}${hy1}`] = 1
-					}
-				})
+	let area = {}
+	while (queue.length > 0) {
+		const [cx, cy] = queue.shift()
+		heightMap[cy][cx] = 9
+		area[`${cx}${cy}`] = 1
+		for (let i = 0; i < 4; ++i) {
+			const newX = cx + directions[i][0]
+			const newY = cy + directions[i][1]
+
+			if (
+				newX >= 0 && newY >= 0 &&
+				newX < cols && newY < rows &&
+				heightMap[newY][newX] !== 9
+			) {
+				queue.push([newX, newY])
 			}
-		})
-	})
-
-	return Object.entries(points).reduce((acc, [_k, v]) => acc += v, 0)
+		}
+	}
+	return Object.entries(area).reduce((acc, [_, a]) => acc += a, 0)
 }
 
 export const getLargestBasins = (heightmap) => {
 	const basinsAreas = heightmap.reduce((acc, line, lineIndex) => {
 		line.forEach((column, columnIndex) => {
 			if (isLowestPoint(heightmap, lineIndex, line, columnIndex, column)) {
-				acc.push(getBasinArea(heightmap, line.length, columnIndex, lineIndex))
+				acc.push(getBasinArea(columnIndex, lineIndex, heightmap.length, line.length, heightmap))
 			}
 		})
 		return acc
 	}, [])
-	// const areas = basinsAreas.sort((a, b) => b - a)
-	// console.dir({areas, length: areas.length})
 	return basinsAreas.sort((a, b) => b - a).reduce((acc, e, index) => index < 3 ? [...acc, [e]] : acc, []).reduce((acc, e) => acc * e, 1)
 }
+
