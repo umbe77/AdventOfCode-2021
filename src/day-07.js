@@ -16,11 +16,12 @@ export const alignCrabSubmarines = (submarines) => {
 }
 
 const getFuelConsumptionByDistance = (distance) => {
-	let consumption = 0
-	for (let i = 1; i <= distance; ++i) {
-		consumption += i
-	}
-	return consumption
+	// let consumption = 0
+	// for (let i = 1; i <= distance; ++i) {
+	// 	consumption += i
+	// }
+	// return consumption
+	return ((1 + distance) * distance) / 2
 }
 
 const getFuelConsumptionByPosition2 = (submarines, alignPosition) => {
