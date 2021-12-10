@@ -21,6 +21,8 @@ const getFuelConsumptionByDistance = (distance) => {
 	// 	consumption += i
 	// }
 	// return consumption
+	
+	// Using Arithmetic Progression
 	return ((1 + distance) * distance) / 2
 }
 
