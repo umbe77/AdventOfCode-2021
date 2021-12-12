@@ -8,7 +8,7 @@ import { getLanternfishTotal } from './src/day-06.js'
 import { alignCrabSubmarines, alignCrabSubmarines2 } from './src/day-07.js'
 import { parseInput as parseInput08, countSimpleDigits, getAllSignalMappings } from './src/day-08.js'
 import { parseHeightmap, getLowestPoints, getLargestBasins } from './src/day-09.js'
-import { parseInputCode, getCorruptedLines } from './src/day-10.js'
+import { parseInputCode, getCorruptedLines, getIncompleteLines } from './src/day-10.js'
 
 const days = {
     "01": (file) => {
@@ -81,6 +81,8 @@ const days = {
         const code = parseInputCode(fs.readFileSync(file).toString())
         const corrupted = getCorruptedLines(code)
         console.log(corrupted)
+		const incomplete = getIncompleteLines(code)
+		console.log(incomplete)
     }
 }
 
