@@ -9,6 +9,7 @@ import { alignCrabSubmarines, alignCrabSubmarines2 } from './src/day-07.js'
 import { parseInput as parseInput08, countSimpleDigits, getAllSignalMappings } from './src/day-08.js'
 import { parseHeightmap, getLowestPoints, getLargestBasins } from './src/day-09.js'
 import { parseInputCode, getCorruptedLines, getIncompleteLines } from './src/day-10.js'
+import { parseInputEnergyLevels, getTotalFlashes, getAllFlashesStep } from './src/day-11.js'
 
 const days = {
     "01": (file) => {
@@ -81,8 +82,16 @@ const days = {
         const code = parseInputCode(fs.readFileSync(file).toString())
         const corrupted = getCorruptedLines(code)
         console.log(corrupted)
-		const incomplete = getIncompleteLines(code)
-		console.log(incomplete)
+        const incomplete = getIncompleteLines(code)
+        console.log(incomplete)
+    },
+    "11": (file) => {
+        const energyLevels = parseInputEnergyLevels(fs.readFileSync(file).toString())
+        const flashes = getTotalFlashes(energyLevels, 100)
+        console.log(flashes)
+        const energyLevels1 = parseInputEnergyLevels(fs.readFileSync(file).toString())
+        const allFlashesStep = getAllFlashesStep(energyLevels1)
+        console.log(allFlashesStep)
     }
 }
 
