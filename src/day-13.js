@@ -91,7 +91,7 @@ const foldHorizontal = (dots, qty) => {
 		if (line) {
 			for (let colIdx = qty + 1; colIdx < line.length; ++colIdx) {
 				if (line[colIdx] === '#') {
-					if(result[i] === undefined) {
+					if (result[i] === undefined) {
 						result[i] = []
 					}
 					const newColIdx = (qty * 2) - colIdx
@@ -116,14 +116,35 @@ export const getPasswordDots = ({ dots, folds }) => {
 	else {
 		result = foldVertical(result, qty)
 	}
-
-	// folds.forEach(({ direction, qty }) => {
-	// 	if (direction === 'x') {
-	// 		result = foldHorizontal(result, qty)
-	// 	}
-	// 	else {
-	// 		result = foldVertical(result, qty)
-	// 	}
-	// })
 	return countDots(result)
+}
+
+const dumpDots = (dots) => {
+	dots.forEach(line => {
+		if (line) {
+			const row = []
+			for (let i=0;i<line.length;++i) {
+				if (line[i] && line[i] === '#'){
+					row.push('#')
+				}
+				else{
+					row.push(' ')
+				}
+			}
+			console.log(row.join(''))
+		}
+	})
+}
+
+export const getActivationCode = ({ dots, folds }) => {
+	let result = dots.slice()
+	folds.forEach(({ direction, qty }) => {
+		if (direction === 'x') {
+			result = foldHorizontal(result, qty)
+		}
+		else {
+			result = foldVertical(result, qty)
+		}
+	})
+	dumpDots(result)
 }

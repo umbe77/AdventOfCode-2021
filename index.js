@@ -11,7 +11,7 @@ import { parseHeightmap, getLowestPoints, getLargestBasins } from './src/day-09.
 import { parseInputCode, getCorruptedLines, getIncompleteLines } from './src/day-10.js'
 import { parseInputEnergyLevels, getTotalFlashes, getAllFlashesStep } from './src/day-11.js'
 import { parseGraph, getAllPaths } from './src/day-12.js'
-import { parsePasswordSheet, getPasswordDots } from './src/day-13.js'
+import { parsePasswordSheet, getPasswordDots, getActivationCode } from './src/day-13.js'
 
 const days = {
 	"01": (file) => {
@@ -104,6 +104,8 @@ const days = {
 		const dots = await parsePasswordSheet(fs.createReadStream(file))
 		const countFirstFold = getPasswordDots(dots)
 		console.log(countFirstFold)
+		const dots2 = await parsePasswordSheet(fs.createReadStream(file))
+		getActivationCode(dots2)
 	}
 }
 
