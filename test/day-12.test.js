@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { parseGraph, getAllPaths } from '../src/day-12.js'
+import { parseGraph, getAllPaths, getAllPaths2 } from '../src/day-12.js'
 
 const input1 = `start-A
 start-b
@@ -58,4 +58,19 @@ describe("Advent Day 12", () => {
 		const paths = getAllPaths(graph)
 		expect(paths).to.be.equal(226)
 	})
+	// it("All Path input2-1", () => {
+	// 	const graph = parseGraph(input1)
+	// 	const paths = getAllPaths2(graph)
+	// 	expect(paths).to.be.equal(36)
+	// })
+	// it("All Path input2-2", () => {
+	// 	const graph = parseGraph(input2)
+	// 	const paths = getAllPaths2(graph)
+	// 	expect(paths).to.be.equal(103)
+	// })
+	// it("All Path input2-3", () => {
+	// 	const graph = parseGraph(input3)
+	// 	const paths = getAllPaths2(graph)
+	// 	expect(paths).to.be.equal(3509)
+	// })
 })

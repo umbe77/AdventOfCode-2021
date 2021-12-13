@@ -27,12 +27,39 @@ const linkedNodes = (graph, node, cache) => {
 }
 
 const isEdgeJustInPath = ({ from, to, path }) => {
-	if (to === 'start' ) {
+	if (to === 'start') {
 		return true
 	}
 	if (path.some(v => v === to && /^[a-z]*$/.test(v))) {
 		return true
 	}
+	return path.reduce((acc, v, i) => {
+		if (v === from) {
+			acc.push(i)
+		}
+		return acc
+	}, []).some(v => path[v + 1] === to)
+}
+
+const isEdgeJustInPath2 = ({ from, to, path, smallVertex }) => {
+	if (to === 'start') {
+		return true
+	}
+	if (path.some(v => {
+		if (v === to && /^[a-z]*$/.test(v)) {
+			if (smallVertex.count === 2) {
+				return true
+			}
+			smallVertex[v]++
+			if (smallVertex[v] > 1) {
+				smallVertex.count = 2
+			}
+		}
+		return false
+	})) {
+		return true
+	}
+
 	return path.reduce((acc, v, i) => {
 		if (v === from) {
 			acc.push(i)
@@ -69,4 +96,47 @@ export const getAllPaths = (graph) => {
 
 	return explore('start', 'end').length
 
+}
+
+const resetSmallVertex = (graph) => {
+	const smallVertex = {
+		count: 1
+	}
+	graph.forEach(e => {
+		smallVertex[e[0]] = 0
+	})
+	return smallVertex
+}
+
+export const getAllPaths2 = (graph) => {
+	const path = []
+	let smallVertex = resetSmallVertex(graph)
+	const nodesCache = new Map()
+
+	const explore = (currentNode, to, paths = []) => {
+
+		path.push(currentNode)
+		for (const linkedNode of linkedNodes(graph, currentNode, nodesCache)) {
+			if (linkedNode === to) {
+				const result = path.slice()
+				result.push(to)
+				paths.push(result)
+				console.dir(result.join())
+				continue
+			}
+			if (!isEdgeJustInPath2({
+				from: currentNode,
+				to: linkedNode,
+				path,
+				smallVertex
+			})) {
+				explore(linkedNode, to, paths)
+			}
+		}
+		path.pop()
+		smallVertex = resetSmallVertex(graph)
+		return paths
+	}
+
+	return explore('start', 'end').length
 }
