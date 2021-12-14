@@ -114,6 +114,9 @@ const days = {
         const polymer = parsePolymerInput(fs.readFileSync(file).toString())
         const max_min = getPolymerMostLeastElements(polymer)
         console.log(max_min)
+        const polymer2 = parsePolymerInput(fs.readFileSync(file).toString())
+        const max_min2 = getPolymerMostLeastElements(polymer2, 40)
+        console.log(max_min2)
     }
 }
 

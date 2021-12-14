@@ -28,9 +28,9 @@ describe("Advent Day 14", () => {
 		expect(result).to.be.equal(1588)
 	})
 
-	// it("Get Max After 40", () => {
-	// 	const polymerFormula = parsePolymerInput(input)
-	// 	const result = getPolymerMostLeastElements(polymerFormula, 40)
-	// 	expect(result).to.be.equal(1588)
-	// })
+	it("Get Max After 40", () => {
+		const polymerFormula = parsePolymerInput(input)
+		const result = getPolymerMostLeastElements(polymerFormula, 40)
+		expect(result).to.be.equal(2188189693529)
+	})
 })
