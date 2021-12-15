@@ -13,6 +13,7 @@ import { parseInputEnergyLevels, getTotalFlashes, getAllFlashesStep } from './sr
 import { parseGraph, getPaths } from './src/day-12.js'
 import { parsePasswordSheet, getPasswordDots, getActivationCode } from './src/day-13.js'
 import { parsePolymerInput, getPolymerMostLeastElements } from './src/day-14.js'
+import { parseChiton, getLowestRiskPath } from './src/day-15.js'
 
 const days = {
     "01": (file) => {
@@ -117,6 +118,11 @@ const days = {
         const polymer2 = parsePolymerInput(fs.readFileSync(file).toString())
         const max_min2 = getPolymerMostLeastElements(polymer2, 40)
         console.log(max_min2)
+    },
+    "15": (file) => {
+        const chiton = parseChiton(fs.readFileSync(file).toString())
+        const lowest = getLowestRiskPath(chiton)
+        console.log(lowest)
     }
 }
 
