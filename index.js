@@ -14,128 +14,135 @@ import { parseGraph, getPaths } from './src/day-12.js'
 import { parsePasswordSheet, getPasswordDots, getActivationCode } from './src/day-13.js'
 import { parsePolymerInput, getPolymerMostLeastElements } from './src/day-14.js'
 import { parseChiton, getLowestRiskPath } from './src/day-15.js'
-import { parseBits, convertMessage} from './src/day-16.js'
+import { parseBits, convertMessage } from './src/day-16.js'
+import { parseAreaCoordinates, getMaxHeight } from './src/day-17.js'
 
 const days = {
-    "01": (file) => {
-        const measurments = fs.readFileSync(file).toString().split("\n").map(val => parseInt(val))
+	"01": (file) => {
+		const measurments = fs.readFileSync(file).toString().split("\n").map(val => parseInt(val))
 
-        const count = getIncreaseCount(measurments)
-        console.log(`Single count ${count}`)
+		const count = getIncreaseCount(measurments)
+		console.log(`Single count ${count}`)
 
-        const countGroup = getIncreaseGroupThreeCount(measurments)
-        console.log(`Group cuont ${countGroup}`)
-    },
-    "02": (file) => {
-        const movements = parseInput(fs.readFileSync(file).toString())
-        const finalPosition = getFinalPosition(movements)
-        console.log(finalPosition.position)
-        const finalPositionWithAim = getFinalPositionWithAim(movements)
-        console.log((finalPositionWithAim.position))
-    },
-    "03": (file) => {
-        const diagnostics = parseDiagnostics(fs.readFileSync(file).toString())
-        const { consumption } = getConsumption(diagnostics)
-        console.log(consumption)
-        const { lifeSupportRate } = getLifeSupport(diagnostics)
-        console.log(lifeSupportRate)
-    },
-    "04": (file) => {
-        const bingo_1 = parseBingoInput(fs.readFileSync(file).toString())
-        const { score } = playBingo(bingo_1)
-        console.log(score)
-        const bingo_2 = parseBingoInput(fs.readFileSync(file).toString())
-        const { lastWinningScore } = getLastWinningBoard(bingo_2)
-        console.log(lastWinningScore)
-    },
-    "05": (file) => {
-        const vent = parseVentInput(fs.readFileSync(file).toString())
-        const intersectionCount = findIntersection(vent)
-        console.log(intersectionCount)
-        const allIntersectionCount = findAllIntersection(vent)
-        console.log(allIntersectionCount)
-    },
-    "06": (file) => {
-        const lanternFishes = fs.readFileSync(file).toString().split(",").map(e => parseInt(e))
-        const lanternFishesAfter80Days = getLanternfishTotal(lanternFishes, 80)
-        console.log(lanternFishesAfter80Days)
-        const lanternFishAfter256Days = getLanternfishTotal(lanternFishes, 256)
-        console.log(lanternFishAfter256Days)
-    },
-    "07": (file) => {
-        const submarines = fs.readFileSync(file).toString().split(",").map(e => parseInt(e))
-        const fuelConsumption = alignCrabSubmarines(submarines)
-        console.log(fuelConsumption)
-        const fuelConsumptionByDistance = alignCrabSubmarines2(submarines)
-        console.log(fuelConsumptionByDistance)
-    },
-    "08": (file) => {
-        const data = parseInput08(fs.readFileSync(file).toString())
-        const countSimple = countSimpleDigits(data)
-        console.log(countSimple)
-        const countAllMappings = getAllSignalMappings(data)
-        console.log(countAllMappings)
-    },
-    "09": (file) => {
-        const heightMap = parseHeightmap(fs.readFileSync(file).toString())
-        const lowest = getLowestPoints(heightMap)
-        console.log(lowest)
-        const largest = getLargestBasins(heightMap)
-        console.log(largest)
-    },
-    "10": (file) => {
-        const code = parseInputCode(fs.readFileSync(file).toString())
-        const corrupted = getCorruptedLines(code)
-        console.log(corrupted)
-        const incomplete = getIncompleteLines(code)
-        console.log(incomplete)
-    },
-    "11": (file) => {
-        const energyLevels = parseInputEnergyLevels(fs.readFileSync(file).toString())
-        const flashes = getTotalFlashes(energyLevels, 100)
-        console.log(flashes)
-        const energyLevels1 = parseInputEnergyLevels(fs.readFileSync(file).toString())
-        const allFlashesStep = getAllFlashesStep(energyLevels1)
-        console.log(allFlashesStep)
-    },
-    "12": (file) => {
-        const graph = parseGraph(fs.readFileSync(file).toString())
-        const allPaths = getPaths(graph)
-        console.log(allPaths)
-        const path_part2 = getPaths(graph, true)
-        console.log(path_part2)
-    },
-    "13": async (file) => {
-        const dots = await parsePasswordSheet(fs.createReadStream(file))
-        const countFirstFold = getPasswordDots(dots)
-        console.log(countFirstFold)
-        const dots2 = await parsePasswordSheet(fs.createReadStream(file))
-        getActivationCode(dots2)
-    },
-    "14": (file) => {
-        const polymer = parsePolymerInput(fs.readFileSync(file).toString())
-        const max_min = getPolymerMostLeastElements(polymer)
-        console.log(max_min)
-        const polymer2 = parsePolymerInput(fs.readFileSync(file).toString())
-        const max_min2 = getPolymerMostLeastElements(polymer2, 40)
-        console.log(max_min2)
-    },
-    "15": (file) => {
-        const chiton = parseChiton(fs.readFileSync(file).toString())
-        const lowest = getLowestRiskPath(chiton)
-        console.log(lowest)
-    },
+		const countGroup = getIncreaseGroupThreeCount(measurments)
+		console.log(`Group cuont ${countGroup}`)
+	},
+	"02": (file) => {
+		const movements = parseInput(fs.readFileSync(file).toString())
+		const finalPosition = getFinalPosition(movements)
+		console.log(finalPosition.position)
+		const finalPositionWithAim = getFinalPositionWithAim(movements)
+		console.log((finalPositionWithAim.position))
+	},
+	"03": (file) => {
+		const diagnostics = parseDiagnostics(fs.readFileSync(file).toString())
+		const { consumption } = getConsumption(diagnostics)
+		console.log(consumption)
+		const { lifeSupportRate } = getLifeSupport(diagnostics)
+		console.log(lifeSupportRate)
+	},
+	"04": (file) => {
+		const bingo_1 = parseBingoInput(fs.readFileSync(file).toString())
+		const { score } = playBingo(bingo_1)
+		console.log(score)
+		const bingo_2 = parseBingoInput(fs.readFileSync(file).toString())
+		const { lastWinningScore } = getLastWinningBoard(bingo_2)
+		console.log(lastWinningScore)
+	},
+	"05": (file) => {
+		const vent = parseVentInput(fs.readFileSync(file).toString())
+		const intersectionCount = findIntersection(vent)
+		console.log(intersectionCount)
+		const allIntersectionCount = findAllIntersection(vent)
+		console.log(allIntersectionCount)
+	},
+	"06": (file) => {
+		const lanternFishes = fs.readFileSync(file).toString().split(",").map(e => parseInt(e))
+		const lanternFishesAfter80Days = getLanternfishTotal(lanternFishes, 80)
+		console.log(lanternFishesAfter80Days)
+		const lanternFishAfter256Days = getLanternfishTotal(lanternFishes, 256)
+		console.log(lanternFishAfter256Days)
+	},
+	"07": (file) => {
+		const submarines = fs.readFileSync(file).toString().split(",").map(e => parseInt(e))
+		const fuelConsumption = alignCrabSubmarines(submarines)
+		console.log(fuelConsumption)
+		const fuelConsumptionByDistance = alignCrabSubmarines2(submarines)
+		console.log(fuelConsumptionByDistance)
+	},
+	"08": (file) => {
+		const data = parseInput08(fs.readFileSync(file).toString())
+		const countSimple = countSimpleDigits(data)
+		console.log(countSimple)
+		const countAllMappings = getAllSignalMappings(data)
+		console.log(countAllMappings)
+	},
+	"09": (file) => {
+		const heightMap = parseHeightmap(fs.readFileSync(file).toString())
+		const lowest = getLowestPoints(heightMap)
+		console.log(lowest)
+		const largest = getLargestBasins(heightMap)
+		console.log(largest)
+	},
+	"10": (file) => {
+		const code = parseInputCode(fs.readFileSync(file).toString())
+		const corrupted = getCorruptedLines(code)
+		console.log(corrupted)
+		const incomplete = getIncompleteLines(code)
+		console.log(incomplete)
+	},
+	"11": (file) => {
+		const energyLevels = parseInputEnergyLevels(fs.readFileSync(file).toString())
+		const flashes = getTotalFlashes(energyLevels, 100)
+		console.log(flashes)
+		const energyLevels1 = parseInputEnergyLevels(fs.readFileSync(file).toString())
+		const allFlashesStep = getAllFlashesStep(energyLevels1)
+		console.log(allFlashesStep)
+	},
+	"12": (file) => {
+		const graph = parseGraph(fs.readFileSync(file).toString())
+		const allPaths = getPaths(graph)
+		console.log(allPaths)
+		const path_part2 = getPaths(graph, true)
+		console.log(path_part2)
+	},
+	"13": async (file) => {
+		const dots = await parsePasswordSheet(fs.createReadStream(file))
+		const countFirstFold = getPasswordDots(dots)
+		console.log(countFirstFold)
+		const dots2 = await parsePasswordSheet(fs.createReadStream(file))
+		getActivationCode(dots2)
+	},
+	"14": (file) => {
+		const polymer = parsePolymerInput(fs.readFileSync(file).toString())
+		const max_min = getPolymerMostLeastElements(polymer)
+		console.log(max_min)
+		const polymer2 = parsePolymerInput(fs.readFileSync(file).toString())
+		const max_min2 = getPolymerMostLeastElements(polymer2, 40)
+		console.log(max_min2)
+	},
+	"15": (file) => {
+		const chiton = parseChiton(fs.readFileSync(file).toString())
+		const lowest = getLowestRiskPath(chiton)
+		console.log(lowest)
+	},
 	"16": (file) => {
 		const bits = parseBits(fs.readFileSync(file).toString())
 		const sum = convertMessage(bits)
 		console.log(sum)
+	},
+	"17": (file) => {
+		const area = parseAreaCoordinates(fs.readFileSync(file).toString())
+		const {max, hit} = getMaxHeight(area)
+		console.log(max)
+		console.log(hit)
 	}
 }
 
 const day = process.argv.slice(2)
 
 const main = async () => {
-    await days[day](`input-${day}.txt`)
+	await days[day](`input-${day}.txt`)
 
 }
 main()
