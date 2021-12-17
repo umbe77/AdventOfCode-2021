@@ -57,9 +57,9 @@ describe("Advent Day 16", () => {
 		const [_, evaluate] = convertMessage(bits)
 		expect(evaluate).to.be.equal(0)
 	})
-	// it("Conver Bits Part 2 - complex", () => {
-	// 	const bits = parseBits('9C0141080250320F1802104A08')
-	// 	const [_, evaluate] = convertMessage(bits)
-	// 	expect(evaluate).to.be.equal(1)
-	// })
+	it("Conver Bits Part 2 - complex", () => {
+		const bits = parseBits('9C0141080250320F1802104A08')
+		const [_, evaluate] = convertMessage(bits)
+		expect(evaluate).to.be.equal(1)
+	})
 })

@@ -128,8 +128,9 @@ const days = {
 	},
 	"16": (file) => {
 		const bits = parseBits(fs.readFileSync(file).toString())
-		const sum = convertMessage(bits)
+		const [sum, evaluate] = convertMessage(bits)
 		console.log(sum)
+		console.log(evaluate)
 	},
 	"17": (file) => {
 		const area = parseAreaCoordinates(fs.readFileSync(file).toString())

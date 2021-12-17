@@ -15,7 +15,7 @@ const readBinary = (bits, len) => {
 	return parseInt(result.join(''), 2)
 }
 
-const readLiteralValue = (bits, parentPacket, packet) => {
+const readLiteralValue = (bits, packet) => {
 	const values = []
 	let bit = 0
 	do {
@@ -26,18 +26,12 @@ const readLiteralValue = (bits, parentPacket, packet) => {
 	} while (bit === 1)
 
 	packet.value = parseInt(values.join(''), 2)
-	parentPacket.packets.push(packet)
-	// console.dir([parentPacket.typeId, parentPacket.packets])
 }
 
 const readOperatorLengthTypeId1 = (bits, packets, parentPacket, packet) => {
 	const totalSubpacket = readBinary(bits, 11)
 	for (let i = 0; i < totalSubpacket; ++i) {
-		const child = parsePacket(bits, packets, packet)
-		if (parentPacket) {
-			parentPacket.packets.push(child)
-		}
-		// console.dir([parentPacket.typeId, parentPacket.packets])
+		parsePacket(bits, packets, packet)
 	}
 }
 
@@ -54,11 +48,7 @@ const readOperatorLengthTypeId0 = (bits, packets, parentPacket, packet) => {
 	const bitsOperator = copyBits(bits, length)
 
 	while (bitsOperator.length > 0) {
-		const child = parsePacket(bitsOperator, packets, packet)
-		if (parentPacket) {
-			parentPacket.packets.push(child)
-		}
-		// console.dir([parentPacket.typeId, parentPacket.packets])
+		parsePacket(bitsOperator, packets, packet)
 	}
 }
 
@@ -76,42 +66,43 @@ const parsePacket = (bits, packets, parentPacket = null) => {
 	const version = readBinary(bits, 3)
 	const typeId = readBinary(bits, 3)
 	const packet = {
-		version, typeId, value: 0, packets: []
+		version, typeId, value: 0, children: []
 	}
 	packets.push(packet)
 
 	if (typeId !== 4) {
 		readOperator(bits, packets, parentPacket, packet)
+		if (parentPacket !== null) {
+			parentPacket.children.push(packet)
+		}
 		switch (typeId) {
 			case 0:
-				// console.dir([0, packet.packets])
-				packet.value = packet.packets.reduce((acc, { value }) => acc += value, 0)
+				packet.value = packet.children.reduce((acc, { value }) => acc += value, 0)
 				break
 			case 1:
-				// console.dir([1, packet.packets])
-				packet.value = packet.packets.reduce((acc, { value }) => acc *= value, 1)
+				packet.value = packet.children.reduce((acc, { value }) => acc *= value, 1)
 				break
 			case 2:
-				packet.value = Math.min(...packet.packets.map(({ value }) => value))
+				packet.value = Math.min(...packet.children.map(({ value }) => value))
 				break
 			case 3:
-				packet.value = Math.max(...packet.packets.map(({ value }) => value))
+				packet.value = Math.max(...packet.children.map(({ value }) => value))
 				break
 			case 5:
-				packet.value = (packet.packets[0].value > packet.packets[1].value) ? 1 : 0
+				packet.value = (packet.children[0].value > packet.children[1].value) ? 1 : 0
 				break
 			case 6:
-				packet.value = (packet.packets[0].value < packet.packets[1].value) ? 1 : 0
+				packet.value = (packet.children[0].value < packet.children[1].value) ? 1 : 0
 				break
 			case 7:
-				packet.value = (packet.packets[0].value === packet.packets[1].value) ? 1 : 0
+				packet.value = (packet.children[0].value === packet.children[1].value) ? 1 : 0
 				break
 		}
 	}
 	else {
-		readLiteralValue(bits, parentPacket, packet)
+		readLiteralValue(bits, packet)
+		parentPacket.children.push(packet)
 	}
-	return packet
 }
 
 export const convertMessage = (bits) => {
