@@ -14,6 +14,7 @@ import { parseGraph, getPaths } from './src/day-12.js'
 import { parsePasswordSheet, getPasswordDots, getActivationCode } from './src/day-13.js'
 import { parsePolymerInput, getPolymerMostLeastElements } from './src/day-14.js'
 import { parseChiton, getLowestRiskPath } from './src/day-15.js'
+import { parseBits, convertMessage} from './src/day-16.js'
 
 const days = {
     "01": (file) => {
@@ -123,7 +124,12 @@ const days = {
         const chiton = parseChiton(fs.readFileSync(file).toString())
         const lowest = getLowestRiskPath(chiton)
         console.log(lowest)
-    }
+    },
+	"16": (file) => {
+		const bits = parseBits(fs.readFileSync(file).toString())
+		const sum = convertMessage(bits)
+		console.log(sum)
+	}
 }
 
 const day = process.argv.slice(2)

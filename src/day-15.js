@@ -20,8 +20,8 @@ export const getLowestRiskPath = (chiton) => {
 		}
 		const a = solve(row + 1, col)
 		const b = solve(row, col + 1)
-		console.dir([a, b])
-		const result = chiton[row][col] + Math.min(solve(row + 1, col), solve(row, col + 1))
+		// const result = chiton[row][col] + [solve(row + 1, col), solve(row, col + 1)].sort((a, b) => a - b)[0]
+		const result = chiton[row][col] + Math.min(a, b)
 		cache.set(rc, result)
 		return result
 	}
