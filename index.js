@@ -16,6 +16,8 @@ import { parsePolymerInput, getPolymerMostLeastElements } from './src/day-14.js'
 import { parseChiton, getLowestRiskPath } from './src/day-15.js'
 import { parseBits, convertMessage } from './src/day-16.js'
 import { parseAreaCoordinates, getMaxHeight } from './src/day-17.js'
+import { parseInputImage, enanche } from './src/day-20.js'
+import { parsePlayers, playWithDeterministicDie } from './src/day-21.js'
 
 const days = {
 	"01": (file) => {
@@ -134,9 +136,19 @@ const days = {
 	},
 	"17": (file) => {
 		const area = parseAreaCoordinates(fs.readFileSync(file).toString())
-		const {max, hit} = getMaxHeight(area)
+		const { max, hit } = getMaxHeight(area)
 		console.log(max)
 		console.log(hit)
+	},
+	"20": (file) => {
+		const data = parseInputImage(fs.readFileSync(file).toString())
+		const [pixels] = enanche(data)
+		console.log(pixels)
+	},
+	"21": (file) => {
+		const players = parsePlayers(fs.readFileSync(file).toString())
+		const score = playWithDeterministicDie(players)
+		console.log(score)
 	}
 }
 
